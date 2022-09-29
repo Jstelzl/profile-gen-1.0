@@ -24,7 +24,7 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Inter');
 const Manager = require('./lib/Manager');
 
-const newStaffMemberData = [];
+const newMemberInfo = [];
 
 // first prompt array for general info
 const questions = async () => {
@@ -52,57 +52,87 @@ const questions = async () => {
             }
         ])
 
-        // If Manager had been chosen
-        if (answers.role === 'Manager') {
-            const managerAnswers = await inquirer
-                .prompt([
-                    {
-                        type: 'input',
-                        message: 'What is your office number',
-                        name: 'officeNumber'
-                    },
-                ])
-                const newManager = new Manager(
-                    answers.name,
-                    answers.id,
-                    answers.email,
-                    managerAnswers.officeNumber
-                );
-                newStaffMemberInfo.push(newManager);
+    // If Manager had been chosen
+    if (answers.role === 'Manager') {
+        const managerAnswers = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What is your office number',
+                    name: 'officeNumber'
+                },
+            ])
+        const newManager = new Manager(
+            answers.name,
+            answers.id,
+            answers.email,
+            managerAnswers.officeNumber
+        );
+        newMemberInfo.push(newManager);
 
 
-        } else if (answers.role === 'Engineer') {
-            const githubAnswers = await inquirer
-                .prompt ([
-                    {
-                        type: 'input',
-                        message: 'What is your Github username?',
-                        name: 'githubuser',
-                    }
-                ])
-                    const newEnineer = new Engineer (
-                        answers.name,
-                        answers.id,
-                        answers.email,
-                        githubAnswers.githubuser
-                    );
-                    newStaffMemberData.push(newEnineer);
+    } else if (answers.role === 'Engineer') {
+        const githubAnswers = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What is your Github username?',
+                    name: 'githubuser',
+                }
+            ])
+        const newEnineer = new Engineer(
+            answers.name,
+            answers.id,
+            answers.email,
+            githubAnswers.githubuser
+        );
+        newMemberInfo.push(newEnineer);
 
-        } else if (answers.role === 'Intern') {
-            const internAnswers = await inquirer
-                prompt ([
-                    {
-                        type: 'input',
-                        message: 'What university did you go to?',
-                        name: 'university'
-                    }
-                ])
-                
-                const newIntern = new Intern(
-                    answers.name,
-                    answers.id,
-                    answers.email,
-                    internAnswers.university
-                )
-        }
-    };
+    } else if (answers.role === 'Intern') {
+        const internAnswers = await inquirer
+        prompt([
+            {
+                type: 'input',
+                message: 'What university did you go to?',
+                name: 'university'
+            }
+        ])
+
+        const newIntern = new Intern(
+            answers.name,
+            answers.id,
+            answers.email,
+            internAnswers.university
+        );
+        newMemberInfo.push(newIntern);
+    }
+};
+
+async function promptQ() {
+    await questions()
+
+    const addMemeberAnswers = await inquirer
+        .prompt([
+            {
+                name: 'addMember',
+                type: 'list',
+                choices: ['Add new member', 'Create team'],
+                message: "What's next?"
+            }
+        ])
+    if (addMemeberAnswers.addMember === 'Add new member') {
+        return promptQ()
+    }
+    return createTeam();
+}
+
+promptQ();
+
+function createTeam() {
+    console.log('new member', newMemberInfo)
+    fs.writeFileSync(
+        "./generatedFrontEnd/index.html",
+        generateTeam(newMemberInfo),
+        "utf-8"
+    );
+}
