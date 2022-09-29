@@ -16,9 +16,9 @@
 // WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
 
-const inquirer = require("inquirer");
-const fs = require("fs");
-const generateTeam = require("")
+const inquirer = require('inquirer');
+const fs = require('fs');
+const generateTeam = require('./src/');
 
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Inter');
@@ -131,7 +131,7 @@ promptQ();
 function createTeam() {
     console.log('new member', newMemberInfo)
     fs.writeFileSync(
-        "./generatedFrontEnd/index.html",
+        "",
         generateTeam(newMemberInfo),
         "utf-8"
     );
