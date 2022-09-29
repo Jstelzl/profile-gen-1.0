@@ -26,6 +26,7 @@ const Manager = require('./lib/Manager');
 
 const newStaffMemberData = [];
 
+// first prompt array for general info
 const questions = async () => {
     const answers = await inquirer
         .prompt([
@@ -50,16 +51,58 @@ const questions = async () => {
                 choices: ['Engineer', 'Intern', 'Manager'],
             }
         ])
-};
 
-if (answers.role === 'Manager') {
-    const managerAns = await inquirer
-        .prompt([
-            {
-                type: 'input',
-                message: 'What is your office number',
-                name: 'officeNumber'
-            },
-        ])
-    
-}
+        // If Manager had been chosen
+        if (answers.role === 'Manager') {
+            const managerAnswers = await inquirer
+                .prompt([
+                    {
+                        type: 'input',
+                        message: 'What is your office number',
+                        name: 'officeNumber'
+                    },
+                ])
+                const newManager = new Manager(
+                    answers.name,
+                    answers.id,
+                    answers.email,
+                    managerAnswers.officeNumber
+                );
+                newStaffMemberInfo.push(newManager);
+
+
+        } else if (answers.role === 'Engineer') {
+            const githubAnswers = await inquirer
+                .prompt ([
+                    {
+                        type: 'input',
+                        message: 'What is your Github username?',
+                        name: 'githubuser',
+                    }
+                ])
+                    const newEnineer = new Engineer (
+                        answers.name,
+                        answers.id,
+                        answers.email,
+                        githubAnswers.githubuser
+                    );
+                    newStaffMemberData.push(newEnineer);
+
+        } else if (answers.role === 'Intern') {
+            const internAnswers = await inquirer
+                prompt ([
+                    {
+                        type: 'input',
+                        message: 'What university did you go to?',
+                        name: 'university'
+                    }
+                ])
+                
+                const newIntern = new Intern(
+                    answers.name,
+                    answers.id,
+                    answers.email,
+                    internAnswers.university
+                )
+        }
+    };
