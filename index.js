@@ -18,11 +18,11 @@
 
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateTeam = require('./src/');
+const generateTeam = require('./src/generate.js');
 
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Inter');
-const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer.js');
+const Intern = require('./lib/Intern.js');
+const Manager = require('./lib/Manager.js');
 
 const newMemberInfo = [];
 
@@ -38,7 +38,7 @@ const questions = async () => {
             {
                 type: 'input',
                 message: 'What is your ID number?',
-                name: 'name'
+                name: 'id'
             },
             {
                 type: 'input',
@@ -46,9 +46,10 @@ const questions = async () => {
                 name: 'email'
             },
             {
-                type: 'input',
+                type: 'list',
+                name: 'role',
                 message: 'What is your role?',
-                choices: ['Engineer', 'Intern', 'Manager'],
+                choices: ['Engineer', 'Intern', 'Manager']
             }
         ])
 
@@ -90,14 +91,13 @@ const questions = async () => {
 
     } else if (answers.role === 'Intern') {
         const internAnswers = await inquirer
-        prompt([
-            {
-                type: 'input',
-                message: 'What university did you go to?',
-                name: 'university'
-            }
-        ])
-
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What university did you go to?',
+                    name: 'university',
+                }
+            ])
         const newIntern = new Intern(
             answers.name,
             answers.id,
