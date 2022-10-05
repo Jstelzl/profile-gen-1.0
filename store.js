@@ -1,3 +1,5 @@
+//markdown
+
 const fs = require('fs');
 const inquirer = require('inquirer');
 const prompt = require('../index.js');
@@ -53,4 +55,108 @@ function teamGenerator(team) {
 
 
 module.exports = teamGenerator;
+
+// index.js
+
+// first prompt array for general info
+const questions = async () => {
+    const answers = await inquirer
+        .prompt([
+            {
+                type: 'input',
+                message: "Enter team member's name.",
+                name: 'name'
+            },
+            {
+                type: 'input',
+                message: "What is your team member's ID number?",
+                name: 'id'
+            },
+            {
+                type: 'input',
+                message: "Enter team member's emil.",
+                name: 'email'
+            },
+            {
+                type: 'list',
+                name: 'role',
+                message: 'What is your role?',
+                choices: ['Engineer', 'Intern', 'Manager']
+            }
+        ])
+
+    // If Manager had been chosen
+    if (answers.role === 'Manager') {
+        const managerAnswers = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What is your office number',
+                    name: 'officeNumber'
+                },
+            ])
+        const newManager = new Manager(
+            answers.name,
+            answers.id,
+            answers.email,
+            managerAnswers.officeNumber
+        );
+        newMemberInfo.push(newManager);
+
+
+    } else if (answers.role === 'Engineer') {
+        const githubAnswers = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What is your Github username?',
+                    name: 'githubuser',
+                }
+            ])
+        const newEnineer = new Engineer(
+            answers.name,
+            answers.id,
+            answers.email,
+            githubAnswers.githubuser
+        );
+        newMemberInfo.push(newEnineer);
+
+    } else if (answers.role === 'Intern') {
+        const internAnswers = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What university did you attend?',
+                    name: 'university',
+                }
+            ])
+        const newIntern = new Intern(
+            answers.name,
+            answers.id,
+            answers.email,
+            internAnswers.university
+        );
+        newMemberInfo.push(newIntern);
+    }
+};
+
+async function promptQ() {
+    await questions()
+
+    const addMemeberAnswers = await inquirer
+        .prompt([
+            {
+                name: 'addMember',
+                type: 'list',
+                choices: ['Add new member', 'Create team'],
+                message: "What's next?"
+            }
+        ])
+    if (addMemeberAnswers.addMember === 'Add new member') {
+        return promptQ()
+    }
+    return generateTeam();
+}
+
+promptQ();
 

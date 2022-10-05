@@ -1,6 +1,7 @@
 const generateTeam = (team) => {
     const html = [];
 
+    // Markdown for manager
     const generateManager = manager => {
         let managerHtml = 
         `<div class="card text-bg-primary m-4" style="width: 18rem;">
@@ -9,13 +10,14 @@ const generateTeam = (team) => {
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${manager.id}</li>
-                    <li class="list-group-item">Email: ${manager.email}</li>
+                    <li class="list-group-item">Email: <span id="email"><a href="mailto:${manager.email}">${manager.email}</a></span></li>
                     <li class="list-group-item">Office number: ${manager.officeNumber}</li>
                 </ul>
             </div>
         </div>`;
         html.push(managerHtml);
     }
+    // Markdown for Engineer
     const generateEngineer = engineer => {
         let engineerHtml = 
         `<div class="card text-bg-primary m-4" style="width: 18rem;">
@@ -31,23 +33,41 @@ const generateTeam = (team) => {
         </div>`;
         html.push(engineerHtml);
     }
-};
+    // Markdown for Intern
+    const generateIntern = intern => {
+        let internHtml = 
+        `<div class="card text-bg-primary m-4" style="width: 18rem;">
+            <h5 class="card-title">Name</h5>
+            <h6 class="card-subtitle mb-2">Job Title: ${intern.name}</h6>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID: ${intern.id}</li>
+                    <li class="list-group-item">Email: ${intern.email}</li>
+                    <li class="list-group-item">Office number: ${intern.officeNumber}</li>
+                </ul>
+            </div>
+        </div>`;
+        html.push(internHtml);
+    }
 
-for (let i = 0; i < team.length; i++) {
-    if (team[i].getRole() === 'Manager') {
-        generateManager(team[i]);
+    for (let i = 0; i < team.length; i++) {
+        if (team[i].getRole() === 'Manager') {
+            generateManager(team[i]);
+        }
+        if (team[i].getRole() === 'Engineer') {
+            generateEngineer(team[i]);
+        }
+        if (team[i].getRole() === 'Intern') {
+            generateIntern(team[i]);
+        }
     }
-    if (team[i].getRole() === 'Engineer') {
-        generateEngineer(team[i]);
-    }
-}
-    
+    return html.join('');
+};
 
 
 
 module.exports = team => {
-    return
-    `<!DOCTYPE html>
+    return `<!DOCTYPE html>
     <html lang="en">
         <head>
             <meta charset="UTF-8" />
@@ -60,8 +80,12 @@ module.exports = team => {
       
     <body>
         <header>
-
+            <h1> My Team </h1>
         </header>
-    </body>`
+
+        <main>
+            ${generateTeam(team)}
+        </main>
+    </body>`;
 }
 

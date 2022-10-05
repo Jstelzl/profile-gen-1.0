@@ -28,107 +28,62 @@ const outputPath = path.join(OUTPUT_DIR, 'index.html');
 
 const newMemberInfo = [];
 
-// first prompt array for general info
-const questions = async () => {
-    const answers = await inquirer
-        .prompt([
-            {
-                type: 'input',
-                message: "Enter team member's name.",
-                name: 'name'
-            },
-            {
-                type: 'input',
-                message: "What is your team member's ID number?",
-                name: 'id'
-            },
-            {
-                type: 'input',
-                message: "Enter team member's emil.",
-                name: 'email'
-            },
-            {
-                type: 'list',
-                name: 'role',
-                message: 'What is your role?',
-                choices: ['Engineer', 'Intern', 'Manager']
-            }
-        ])
-
-    // If Manager had been chosen
-    if (answers.role === 'Manager') {
-        const managerAnswers = await inquirer
-            .prompt([
-                {
-                    type: 'input',
-                    message: 'What is your office number',
-                    name: 'officeNumber'
-                },
-            ])
-        const newManager = new Manager(
-            answers.name,
-            answers.id,
-            answers.email,
-            managerAnswers.officeNumber
-        );
-        newMemberInfo.push(newManager);
-
-
-    } else if (answers.role === 'Engineer') {
-        const githubAnswers = await inquirer
-            .prompt([
-                {
-                    type: 'input',
-                    message: 'What is your Github username?',
-                    name: 'githubuser',
-                }
-            ])
-        const newEnineer = new Engineer(
-            answers.name,
-            answers.id,
-            answers.email,
-            githubAnswers.githubuser
-        );
-        newMemberInfo.push(newEnineer);
-
-    } else if (answers.role === 'Intern') {
-        const internAnswers = await inquirer
-            .prompt([
-                {
-                    type: 'input',
-                    message: 'What university did you attend?',
-                    name: 'university',
-                }
-            ])
-        const newIntern = new Intern(
-            answers.name,
-            answers.id,
-            answers.email,
-            internAnswers.university
-        );
-        newMemberInfo.push(newIntern);
-    }
+const managerPrompt = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Enter your name: '
+        },
+        {
+            type: 'input',
+            name: 'memberId',
+            message: 'Enter your employee ID: '
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Enter your Email Address: '
+        },
+        {
+            type: 'input',
+            name: 'officeNumber',
+            message: 'Enter your Office Number: '
+        }
+    ]).then(answers => {
+        const manager = new Manager(answers.name, answers.memberId, answers.email, answers.officeNumber);
+        teamMember.push(manager);
+        promptMenu();
+    })
 };
 
-async function promptQ() {
-    await questions()
+const promptMenu = () => {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'roleMenu',
+            message: 'Please select a role from the menu.',
+            choices: ['Engineer', 'Intern', 'Finish & generate team']
+        }
+    ])
+    
+    .then(userChoice => {
+        switch(userChoice.menu) {
+            case 'Engineer':
+                promptEngineer();
+                break;
+            case 'Intern':
+                promptIntern();
+                break;
+            default:
+                buildTeam();
+                
+        }
+    });
+    
 
-    const addMemeberAnswers = await inquirer
-        .prompt([
-            {
-                name: 'addMember',
-                type: 'list',
-                choices: ['Add new member', 'Create team'],
-                message: "What's next?"
-            }
-        ])
-    if (addMemeberAnswers.addMember === 'Add new member') {
-        return promptQ()
-    }
-    return generateTeam();
-}
+};
 
-promptQ();
 
 if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR)
