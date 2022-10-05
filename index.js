@@ -37,7 +37,7 @@ const managerPrompt = () => {
         },
         {
             type: 'input',
-            name: 'memberId',
+            name: 'employeeId',
             message: 'Enter your employee ID: '
         },
         {
@@ -51,7 +51,7 @@ const managerPrompt = () => {
             message: 'Enter your Office Number: '
         }
     ]).then(answers => {
-        const manager = new Manager(answers.name, answers.memberId, answers.email, answers.officeNumber);
+        const manager = new Manager(answers.name, answers.employeeId, answers.email, answers.officeNumber);
         teamMember.push(manager);
         promptMenu();
     })
@@ -66,7 +66,7 @@ const promptMenu = () => {
             choices: ['Engineer', 'Intern', 'Finish & generate team']
         }
     ])
-    
+
     .then(userChoice => {
         switch(userChoice.menu) {
             case 'Engineer':
@@ -82,6 +82,74 @@ const promptMenu = () => {
     });
     
 
+};
+
+const promptEngineer = () => {
+    console.log(`
+    ============
+    New Engineer
+    ============
+    `)
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "Enter the engineer's name: "
+        },
+        {
+            type: 'input',
+            name: 'employeeId',
+            message: "Enter the engineer's employee id number: "
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "Enter the engineer's email address: "
+        },
+        {
+            type: 'input',
+            name: 'gitHub',
+            message: "Enter the engineer's gitHub username: "
+        },
+    ]).then(answers => {
+        const engineer = new Engineer(answers.name, answers.employeeId, answers.email, answers.gitHub);
+        teamMember.push(engineer);
+        promptMenu();
+    })
+};
+
+const promptIntern = () => {
+    console.log(`
+    ============
+    New Intern
+    ============
+    `)
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "Enter the intern's name: "
+        },
+        {
+            type: 'input',
+            name: 'employeeId',
+            message: "Enter the intern's employee id number: "
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "Enter the intern's email address: "
+        },
+        {
+            type: 'input',
+            name: 'university',
+            message: "Enter the intern's university name: "
+        },
+    ]).then(answers => {
+        const intern = new Intern(answers.name, answers.employeeId, answers.email, answers.university);
+        teamMember.push(intern);
+        promptMenu();
+    })
 };
 
 
