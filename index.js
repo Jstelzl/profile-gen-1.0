@@ -21,13 +21,14 @@ const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateTeam = require('./src/generate.js');
+const generateTeam = require('./src/generateTeam.js');
 const path = require('path');
 const OUTPUT_DIR = path.resolve(__dirname, 'output');
 const outputPath = path.join(OUTPUT_DIR, 'index.html');
 
 const newMemberInfo = [];
 
+// Team Manager Info
 const managerPrompt = () => {
     return inquirer.prompt([
         {
@@ -52,11 +53,12 @@ const managerPrompt = () => {
         }
     ]).then(answers => {
         const manager = new Manager(answers.name, answers.employeeId, answers.email, answers.officeNumber);
-        teamMember.push(manager);
+        teamMembers.push(manager);
         promptMenu();
     })
 };
 
+// Role Choice menu (engineer, intern, generate team)
 const promptMenu = () => {
     return inquirer.prompt([
         {
@@ -80,10 +82,9 @@ const promptMenu = () => {
                 
         }
     });
-    
-
 };
 
+// If engineer is chosen
 const promptEngineer = () => {
     console.log(`
     ============
@@ -113,17 +114,19 @@ const promptEngineer = () => {
         },
     ]).then(answers => {
         const engineer = new Engineer(answers.name, answers.employeeId, answers.email, answers.gitHub);
-        teamMember.push(engineer);
+        teamMembers.push(engineer);
         promptMenu();
     })
 };
 
+// If intern is chosen
 const promptIntern = () => {
     console.log(`
     ============
     New Intern
     ============
     `)
+
     return inquirer.prompt([
         {
             type: 'input',
@@ -147,15 +150,24 @@ const promptIntern = () => {
         },
     ]).then(answers => {
         const intern = new Intern(answers.name, answers.employeeId, answers.email, answers.university);
-        teamMember.push(intern);
+        teamMembers.push(intern);
         promptMenu();
     })
 };
 
+const generateTeam = () => {
+    console.log(`
+    ======================
+    Finish & Generate Team
+    ======================
+    `);
 
-if (!fs.existsSync(OUTPUT_DIR)) {
-    fs.mkdirSync(OUTPUT_DIR)
-}
-fs.writeFileSync(outputPath, generateTeam(newMemberInfo), "utf-8");
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.writeFileSync(outputPath, generateTeam(teamMembers), "utf-8");
+};
+
+managerPrompt();
 
 //module.exports = newMemberInfo;
