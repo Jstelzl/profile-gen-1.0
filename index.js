@@ -21,12 +21,12 @@ const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateTeam = require('./src/generateTeam.js');
+const generateSite = require('./src/generate-Team.js');
 const path = require('path');
 const OUTPUT_DIR = path.resolve(__dirname, 'output');
 const outputPath = path.join(OUTPUT_DIR, 'index.html');
 
-const newMemberInfo = [];
+const teamMembers = [];
 
 // Team Manager Info
 const managerPrompt = () => {
@@ -64,13 +64,12 @@ const promptMenu = () => {
         {
             type: 'list',
             name: 'roleMenu',
-            message: 'Please select a role from the menu.',
+            message: 'Please select a role from the menu:',
             choices: ['Engineer', 'Intern', 'Finish & generate team']
         }
     ])
-
-    .then(userChoice => {
-        switch(userChoice.menu) {
+    .then(roleChoice => {
+        switch(roleChoice.roleMenu) {
             case 'Engineer':
                 promptEngineer();
                 break;
@@ -155,7 +154,7 @@ const promptIntern = () => {
     })
 };
 
-const generateTeam = () => {
+const buildTeam = () => {
     console.log(`
     ======================
     Finish & Generate Team
@@ -165,7 +164,7 @@ const generateTeam = () => {
     if (!fs.existsSync(OUTPUT_DIR)) {
         fs.mkdirSync(OUTPUT_DIR)
     }
-    fs.writeFileSync(outputPath, generateTeam(teamMembers), "utf-8");
+    fs.writeFileSync(outputPath, generateSite(teamMembers), "utf-8");
 };
 
 managerPrompt();

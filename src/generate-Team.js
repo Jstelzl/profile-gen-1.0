@@ -6,9 +6,10 @@ const generateTeam = (team) => {
         let managerHtml = 
         `<div class="card text-bg-primary m-4" style="width: 18rem;">
             <h5 class="card-title">Name</h5>
-            <h6 class="card-subtitle mb-2">Job Title: ${manager.name}</h6>
+            <h6 class="card-subtitle mb-2">Job Title: Manager</h6>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Name: ${manager.name}</li>
                     <li class="list-group-item">ID: ${manager.id}</li>
                     <li class="list-group-item">Email: <span id="email"><a href="mailto:${manager.email}">${manager.email}</a></span></li>
                     <li class="list-group-item">Office number: ${manager.officeNumber}</li>
@@ -22,11 +23,12 @@ const generateTeam = (team) => {
         let engineerHtml = 
         `<div class="card text-bg-primary m-4" style="width: 18rem;">
             <h5 class="card-title">Name</h5>
-            <h6 class="card-subtitle mb-2">Job Title: ${engineer.name}</h6>
+            <h6 class="card-subtitle mb-2">Job Title: Engineer</h6>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Name: ${engineer.name}</li>
                     <li class="list-group-item">ID: ${engineer.id}</li>
-                    <li class="list-group-item">Email: ${engineer.email}</li>
+                    <li class="list-group-item">Email: <span id="email"><a href="mailto:${engineer.email}">${engineer.email}</a></span></li>
                     <li class="list-group-item">Office number: ${engineer.officeNumber}</li>
                 </ul>
             </div>
@@ -38,11 +40,12 @@ const generateTeam = (team) => {
         let internHtml = 
         `<div class="card text-bg-primary m-4" style="width: 18rem;">
             <h5 class="card-title">Name</h5>
-            <h6 class="card-subtitle mb-2">Job Title: ${intern.name}</h6>
+            <h6 class="card-subtitle mb-2">Job Title: Intern</h6>
             <div class="card-body">
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Name ${intern.name}</li>
                     <li class="list-group-item">ID: ${intern.id}</li>
-                    <li class="list-group-item">Email: ${intern.email}</li>
+                    <li class="list-group-item">Email: <span id="email"><a href="mailto:${intern.email}">${intern.email}</a></span></li>
                     <li class="list-group-item">Office number: ${intern.officeNumber}</li>
                 </ul>
             </div>
