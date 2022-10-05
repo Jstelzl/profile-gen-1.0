@@ -16,13 +16,15 @@
 // WHEN I decide to finish building my team
 // THEN I exit the application, and the HTML is generated
 
-const inquirer = require('inquirer');
-const fs = require('fs');
-const generateTeam = require('./src/generate.js');
-
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
+const inquirer = require('inquirer');
+const fs = require('fs');
+const generateTeam = require('./src/generate.js');
+const path = require('path');
+const OUTPUT_DIR = path.resolve(__dirname, 'output');
+const outputPath = path.join(OUTPUT_DIR, 'index.html');
 
 const newMemberInfo = [];
 
@@ -32,17 +34,17 @@ const questions = async () => {
         .prompt([
             {
                 type: 'input',
-                message: 'What is your name?',
+                message: "Enter team member's name.",
                 name: 'name'
             },
             {
                 type: 'input',
-                message: 'What is your ID number?',
+                message: "What is your team member's ID number?",
                 name: 'id'
             },
             {
                 type: 'input',
-                message: 'What is email address?',
+                message: "Enter team member's emil.",
                 name: 'email'
             },
             {
@@ -94,7 +96,7 @@ const questions = async () => {
             .prompt([
                 {
                     type: 'input',
-                    message: 'What university did you go to?',
+                    message: 'What university did you attend?',
                     name: 'university',
                 }
             ])
@@ -123,16 +125,14 @@ async function promptQ() {
     if (addMemeberAnswers.addMember === 'Add new member') {
         return promptQ()
     }
-    return createTeam();
+    return generateTeam();
 }
 
 promptQ();
 
-function createTeam() {
-    console.log('new member', newMemberInfo)
-    fs.writeFileSync(
-        "",
-        generateTeam(newMemberInfo),
-        "utf-8"
-    );
+if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR)
 }
+fs.writeFileSync(outputPath, generateTeam(newMemberInfo), "utf-8");
+
+//module.exports = newMemberInfo;
