@@ -1,54 +1,56 @@
+// Team generator function, (referenced in exports)
 const generateTeam = (team) => {
     const html = [];
 
     // Markdown for manager
     const generateManager = manager => {
         let managerHtml = 
-        `<div class="card text-bg-primary m-4" style="width: 18rem;">
-            <h5 class="card-title">Name</h5>
-            <h6 class="card-subtitle mb-2">Job Title: Manager</h6>
-            <div class="card-body">
+        `<div class="card" style="width: 18rem;">
+            <div class="card-header">
+                ${manager.name} <br/>
+            </div>
+            <i class="fas fa-mug-hot"></i>Manager</div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Name: ${manager.name}</li>
                     <li class="list-group-item">ID: ${manager.id}</li>
                     <li class="list-group-item">Email: <span id="email"><a href="mailto:${manager.email}">${manager.email}</a></span></li>
                     <li class="list-group-item">Office number: ${manager.officeNumber}</li>
                 </ul>
-            </div>
         </div>`;
         html.push(managerHtml);
     }
     // Markdown for Engineer
     const generateEngineer = engineer => {
+        console.log(engineer);
         let engineerHtml = 
-        `<div class="card text-bg-primary m-4" style="width: 18rem;">
-            <h5 class="card-title">Name</h5>
-            <h6 class="card-subtitle mb-2">Job Title: Engineer</h6>
-            <div class="card-body">
+        `<div class="card" style="width: 18rem;">
+            <div class="card-header">
+                ${engineer.name} <br/>
+            </div>
+            <i class="fas fa-glasses"></i>Engineer</div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Name: ${engineer.name}</li>
                     <li class="list-group-item">ID: ${engineer.id}</li>
                     <li class="list-group-item">Email: <span id="email"><a href="mailto:${engineer.email}">${engineer.email}</a></span></li>
-                    <li class="list-group-item">Office number: ${engineer.officeNumber}</li>
+                    <li class="list-group-item">Office number: ${engineer.github}</li>
                 </ul>
-            </div>
         </div>`;
         html.push(engineerHtml);
     }
     // Markdown for Intern
     const generateIntern = intern => {
         let internHtml = 
-        `<div class="card text-bg-primary m-4" style="width: 18rem;">
-            <h5 class="card-title">Name</h5>
-            <h6 class="card-subtitle mb-2">Job Title: Intern</h6>
-            <div class="card-body">
+        `<div class="card" style="width: 18rem;">
+            <div class="card-header">
+                ${intern.name} <br/>
+            </div>
+            <i class="fas fa-user-graduate"></i>Intern</div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Name ${intern.name}</li>
+                    <li class="list-group-item">Name: ${intern.name}</li>
                     <li class="list-group-item">ID: ${intern.id}</li>
                     <li class="list-group-item">Email: <span id="email"><a href="mailto:${intern.email}">${intern.email}</a></span></li>
-                    <li class="list-group-item">Office number: ${intern.officeNumber}</li>
+                    <li class="list-group-item">Office number: ${intern.university}</li>
                 </ul>
-            </div>
         </div>`;
         html.push(internHtml);
     }
@@ -68,7 +70,7 @@ const generateTeam = (team) => {
 };
 
 
-
+// Exports base html file with the html chosen via 'generateTeam()'
 module.exports = team => {
     return `<!DOCTYPE html>
     <html lang="en">
@@ -76,19 +78,24 @@ module.exports = team => {
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-            <title>My Team</title>
-            <link rel="stylesheet" href="style.css">
+            <link rel="stylesheet" href="./dist/style.css" />
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+            <title>My Team</title>
+
         </head>
       
-    <body>
-        <header>
-            <h1> My Team </h1>
-        </header>
+        <body>
+            <header>
+                <h1> My Team </h1>
+            </header>
 
-        <main>
-            ${generateTeam(team)}
-        </main>
-    </body>`;
+            <main>
+                ${generateTeam(team)}
+            </main>
+            
+        </body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </html>
+    `;
 }
 

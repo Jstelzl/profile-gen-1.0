@@ -34,22 +34,22 @@ const managerPrompt = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'Enter your name: '
+            message: 'Enter your name:'
         },
         {
             type: 'input',
             name: 'employeeId',
-            message: 'Enter your employee ID: '
+            message: 'Enter your employee ID:'
         },
         {
             type: 'input',
             name: 'email',
-            message: 'Enter your Email Address: '
+            message: 'Enter your Email Address:'
         },
         {
             type: 'input',
             name: 'officeNumber',
-            message: 'Enter your Office Number: '
+            message: 'Enter your Office Number:'
         }
     ]).then(answers => {
         const manager = new Manager(answers.name, answers.employeeId, answers.email, answers.officeNumber);
@@ -94,22 +94,22 @@ const promptEngineer = () => {
         {
             type: 'input',
             name: 'name',
-            message: "Enter the engineer's name: "
+            message: "Enter the engineer's name:"
         },
         {
             type: 'input',
             name: 'employeeId',
-            message: "Enter the engineer's employee id number: "
+            message: "Enter the engineer's employee id number:"
         },
         {
             type: 'input',
             name: 'email',
-            message: "Enter the engineer's email address: "
+            message: "Enter the engineer's email address:"
         },
         {
             type: 'input',
             name: 'gitHub',
-            message: "Enter the engineer's gitHub username: "
+            message: "Enter the engineer's gitHub username:"
         },
     ]).then(answers => {
         const engineer = new Engineer(answers.name, answers.employeeId, answers.email, answers.gitHub);
@@ -130,22 +130,22 @@ const promptIntern = () => {
         {
             type: 'input',
             name: 'name',
-            message: "Enter the intern's name: "
+            message: "Enter the intern's name:"
         },
         {
             type: 'input',
             name: 'employeeId',
-            message: "Enter the intern's employee id number: "
+            message: "Enter the intern's employee id number:"
         },
         {
             type: 'input',
             name: 'email',
-            message: "Enter the intern's email address: "
+            message: "Enter the intern's email address:"
         },
         {
             type: 'input',
             name: 'university',
-            message: "Enter the intern's university name: "
+            message: "Enter the intern's university name:"
         },
     ]).then(answers => {
         const intern = new Intern(answers.name, answers.employeeId, answers.email, answers.university);
