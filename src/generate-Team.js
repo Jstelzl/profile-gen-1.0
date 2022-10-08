@@ -30,7 +30,7 @@ const generateTeam = (team) => {
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${engineer.id}</li>
                     <li class="list-group-item">Email: <span id="email"><a href="mailto:${engineer.email}">${engineer.email}</a></span></li>
-                    <li class="list-group-item">GitHub Username: ${engineer.github}</li>
+                    <li class="list-group-item">GitHub Username: <a target="__blank" href="https://github.com/${engineer.github}">${engineer.github}</a></li>
                 </ul>
         </div>`;
         html.push(engineerHtml);
