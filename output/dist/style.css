@@ -4,7 +4,7 @@ header {
     padding: 10px;
     display: flex;
     justify-content: center;
-    font-size: 2em; 
+    font-size: 20px; 
     margin: 15px;
     padding: 10px;
 }
@@ -14,6 +14,7 @@ main {
     flex-wrap: wrap;
     margin: 15px;
     padding: 10px;
+    justify-content: center;
 }
 
 .card {
@@ -23,16 +24,20 @@ main {
 
 .card-header {
     color: white;
-    background-color: rgba(0, 0, 225, 0.584);
+    background-color: blue;
+    text-align: center;
 }
 
 .list-group {
     color: black;
+    background-color: white;
+    text-align: center;
 }
 
 .list-group-item {
     white-space: nowrap;
     overflow: visible;
+    list-style: none;
 }
 
 #email {

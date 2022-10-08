@@ -1,4 +1,4 @@
-// Team generator function, (referenced in exports)
+// inserts compiled prompt data into html markdown, (referenced in exports)
 const generateTeam = (team) => {
     const html = [];
 
@@ -9,9 +9,8 @@ const generateTeam = (team) => {
             <div class="card-header">
                 ${manager.name} <br/>
             </div>
-            <i class="fas fa-mug-hot"></i>Manager</div>
+            <div><i class="fas fa-mug-hot title">Manager</i></div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Name: ${manager.name}</li>
                     <li class="list-group-item">ID: ${manager.id}</li>
                     <li class="list-group-item">Email: <span id="email"><a href="mailto:${manager.email}">${manager.email}</a></span></li>
                     <li class="list-group-item">Office number: ${manager.officeNumber}</li>
@@ -29,10 +28,9 @@ const generateTeam = (team) => {
             </div>
             <i class="fas fa-glasses"></i>Engineer</div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Name: ${engineer.name}</li>
                     <li class="list-group-item">ID: ${engineer.id}</li>
                     <li class="list-group-item">Email: <span id="email"><a href="mailto:${engineer.email}">${engineer.email}</a></span></li>
-                    <li class="list-group-item">Office number: ${engineer.github}</li>
+                    <li class="list-group-item">GitHub Username: ${engineer.github}</li>
                 </ul>
         </div>`;
         html.push(engineerHtml);
@@ -40,18 +38,19 @@ const generateTeam = (team) => {
     // Markdown for Intern
     const generateIntern = intern => {
         let internHtml = 
-        `<div class="card" style="width: 18rem;">
-            <div class="card-header">
-                ${intern.name} <br/>
-            </div>
-            <i class="fas fa-user-graduate"></i>Intern</div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Name: ${intern.name}</li>
-                    <li class="list-group-item">ID: ${intern.id}</li>
-                    <li class="list-group-item">Email: <span id="email"><a href="mailto:${intern.email}">${intern.email}</a></span></li>
-                    <li class="list-group-item">Office number: ${intern.university}</li>
-                </ul>
-        </div>`;
+        `
+        <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    ${intern.name} <br/>
+                </div>
+                <i class="fas fa-user-graduate"></i>Intern</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">ID: ${intern.id}</li>
+                        <li class="list-group-item">Email: <span id="email"><a href="mailto:${intern.email}">${intern.email}</a></span></li>
+                        <li class="list-group-item">Office number: ${intern.university}</li>
+                    </ul>
+        </div>
+        `;
         html.push(internHtml);
     }
 
@@ -70,7 +69,7 @@ const generateTeam = (team) => {
 };
 
 
-// Exports base html file with the html chosen via 'generateTeam()'
+// Exports html page
 module.exports = team => {
     return `<!DOCTYPE html>
     <html lang="en">
@@ -90,7 +89,9 @@ module.exports = team => {
             </header>
 
             <main>
-                ${generateTeam(team)}
+                <section class = "row justify-content-center">
+                    ${generateTeam(team)}
+                </section>
             </main>
             
         </body>

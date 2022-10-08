@@ -68,6 +68,7 @@ const promptMenu = () => {
             choices: ['Engineer', 'Intern', 'Finish & generate team']
         }
     ])
+    // determines what to do when one of the following roles is chosen
     .then(roleChoice => {
         switch(roleChoice.roleMenu) {
             case 'Engineer':
@@ -168,5 +169,3 @@ const buildTeam = () => {
 };
 
 managerPrompt();
-
-//module.exports = newMemberInfo;
