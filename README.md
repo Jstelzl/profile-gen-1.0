@@ -8,6 +8,3 @@
 
 #### Walk through video: 
 
-
-#### Example HTML page: 
-
